@@ -1,5 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('hello_world', function () {
+
+    $posts = factory(Post::class,2)->make();
+
+    dd($posts);
+
+    return view('hello_world',[
+        'posts' => $posts,
+    ]);
+})->name('home.hello_world');
