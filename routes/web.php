@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Models\Post;
 
 
 /*
@@ -13,18 +12,19 @@ use App\Models\Post;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Models\Post;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('hello_world', function () {
+    // Handle request
+    $posts = factory(Post::class, 10)->make();
 
-    $posts = factory(Post::class,2)->make();
-
-    dd($posts);
-
-    return view('hello_world',[
+    return view('hello_world', [
         'posts' => $posts,
     ]);
 })->name('home.hello_world');
