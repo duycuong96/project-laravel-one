@@ -28,3 +28,33 @@ Route::get('hello_world', function () {
         'posts' => $posts,
     ]);
 })->name('home.hello_world');
+
+Route::group([
+    'prefix' => 'users',
+    'as' => 'users.',
+], function () {
+    Route::get('create', function () {
+        // $user = factory(User::class, 1)->make()->first();
+
+        $user = User::created([
+            'name' => 'CuongVD',
+            'dob' => '2020-02-20',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('123456'),
+        ]);
+
+        // Facade
+        // Route::redirect('users.show');
+
+        // Helper
+        // return redirect()->route('users.show')->with([
+        //     'user' => $user,
+        // ]);
+
+        return view('user.show');
+    })->name('create');
+
+    Route::get('show', function () {
+        dd(session()->get('user'));
+    })->name('show');
+});
