@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Post;
 
-class PostsTableSeeder extends Seeder
+class PostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
         factory(Post::class, 50)->create();
     }
 }

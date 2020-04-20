@@ -1,7 +1,6 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,49 +11,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Models\Post;
+
 use App\Models\User;
+use App\Models\Post;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('admin', 'welcome' );
 
+// Route::view('/', 'welcome');
 
-Route::get('hello_world', function () {
-    // Handle request
-    $posts = factory(Post::class, 10)->make();
+Route::get('hello_world', 'HelloController')->name('home.hello_world');
 
-    return view('hello_world', [
-        'posts' => $posts,
-    ]);
-})->name('home.hello_world');
+Route::resource('users', 'UserController');
 
-Route::group([
-    'prefix' => 'users',
-    'as' => 'users.',
-], function () {
-    Route::get('create', function () {
-        // $user = factory(User::class, 1)->make()->first();
+Route::get('login', 'AuthController@getLoginForm');
 
-        $user = User::created([
-            'name' => 'CuongVD',
-            'dob' => '2020-02-20',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('123456'),
-        ]);
-
-        // Facade
-        // Route::redirect('users.show');
-
-        // Helper
-        // return redirect()->route('users.show')->with([
-        //     'user' => $user,
-        // ]);
-
-        return view('user.show');
-    })->name('create');
-
-    Route::get('show', function () {
-        dd(session()->get('user'));
-    })->name('show');
-});
+Route::post('login', 'AuthController@login' )->name('auth.login');
